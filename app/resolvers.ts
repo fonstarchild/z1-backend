@@ -1,14 +1,19 @@
 import { AuthenticationError } from 'apollo-server'
 import { levels, lessons, questions, textContent, answers, users } from './dataset'
-import { isAStudent, isATeacher } from './utils'
+import { isATeacher } from './utils'
 import Level from "./models/levelSchema";
 import Lesson from "./models/lessonSchema";
+import Account from './models/accountSchema';
+import Question from './models/questionSchema';
+import Answer from './models/answerSchema';
+
+
+import { ANSWER_TYPES, ROLES } from './constants';
 
 const Resolvers = {
-
   Query: {
     getAllLevels: async () => {
-     const allLevels = await Level.find({}).populate('lessons').exec();;
+     const allLevels = await Level.find({}).populate('lessons').exec();
      return allLevels;
     },
 
@@ -16,11 +21,12 @@ const Resolvers = {
       return levels.find((level) => level.id === args.id)
     },
 
-    getStudents: (_: any, args: any, context: any) => {
+    getStudents: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError("The user is not a teacher.")
       }
-      return users.filter(user=>isAStudent(user))
+      const allStudents = await Account.find({role: ROLES.STUDENT}).exec();
+      return allStudents;
     },
 
     isContentViewed: (_: any, args: any, context: any) => {
@@ -32,10 +38,12 @@ const Resolvers = {
       if(targetAnswer){
         return targetAnswer.correct;
       }
-      return false;    },
+      return false;    
+    },
 
-    getLessonsByLevel: (_: any, args: any, context: any) => {
-      return lessons.filter((lesson) => lesson.level === args.level)
+    getLessonsByLevel: async (_: any, args: any, context: any) => {
+      const allLevels = await Lesson.find({level: args.level}).populate('questions').exec();
+      return allLevels;
     },
 
     getContentByLesson: (_: any, args: any) => {
@@ -66,11 +74,43 @@ const Resolvers = {
       return newLevel
     },
 
+    addQuestionForALesson: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError("The user is not a teacher.")
+      }
+      const targetLesson = await Lesson.findById(args.lesson).exec();
+      if(targetLesson){
+        const newQuestion = new Question({
+          question: args.question,
+          type: args.type,
+          hierarchy: targetLesson.hierarchy === 1 ? targetLesson.hierarchy++ : 1,
+          correctAnswer: args.correctAnswer,
+          lesson: targetLesson._id,
+        })
+        await newQuestion.save()
+        targetLesson.questions.push(newQuestion._id);
+        await targetLesson.save()
+        return newQuestion
+      }
+      return null;
+    },
+
+    addTestStudent: async (_: any, args: any, context: any) => {
+      const newStudent = new Account({
+        username: args.username,
+        authtoken: args.authtoken,
+        role: ROLES.STUDENT,
+        seenContent: []
+      })
+      await newStudent.save();
+      return newStudent;
+    },
+
     addLessonForALevel: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError("The user is not a teacher.")
       }
-      const targetLevel = await Level.findOne({ title: args.level }).exec();
+      const targetLevel = await Level.findById(args.level).exec();
       
       if(targetLevel){
         const newLesson = new Lesson({
@@ -86,17 +126,39 @@ const Resolvers = {
       return null;
     },
 
-    giveAnswer: (_: any, args: any, context: any) => {
-      // We should check if an answer is valid here
-      const answer = {
-        id: levels.length + 1,
-        question: args.question,
-        answer: args.answer,
-        student: context.user.id,
-        correct: true,
+    giveAnswer: async(_: any, args: any, context: any) => {
+      // First we retrieve the question that the answer made was
+      const targetQuestion = await Question.findById(args.question).exec();
+      // Then, depending on the type, we do some verifications:
+      let isCorrect: boolean = false;
+      if(targetQuestion){
+        switch(targetQuestion.type){
+          case ANSWER_TYPES.SIMPLE:
+            isCorrect = targetQuestion.correctAnswer.includes(args.answer[0])
+            break;
+          case ANSWER_TYPES.MULTIPLE:
+            isCorrect = targetQuestion.correctAnswer.every(
+              answer=>{
+                args.answer.includes(answer);
+              }
+            )
+            break;
+          case ANSWER_TYPES.FREE:
+            isCorrect = true;
+            break;
+          default:
+            break;
+        }
+        const answer = new Answer({
+          answer: args.answer,
+          correct: isCorrect,
+          student: context.user._id,
+          question: targetQuestion._id 
+        })
+        await answer.save();
+        return answer;
       }
-      answers.push(answer)
-      return answer;
+      return null;
     }
 
   }

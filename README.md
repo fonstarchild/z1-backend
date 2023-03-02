@@ -13,7 +13,7 @@
 
 ## Acerca del proyecto
 
-La implementación del proyecto se ha hecho tal y como se pedía. Decidí no usar una base de datos para reducir la complejidad del proyecto y mi escasa experiencia trabajando con MongoDB. Quise, en un principio, usar PostgreSQL pero para el test, me parecía matar moscas a cañonazos. No obstante si buscáis una implementación de una base de datos puedo rehacerlo sin problema.
+La implementación del proyecto se ha hecho tal y como se pedía. Al principio, decidí no usar una base de datos para reducir la complejidad del proyecto y, sinceramente, por mi escasa experiencia trabajando con MongoDB. Al final, me he tirado a la piscina (de perdidos al río, y ...!aprender cosas nunca está mal!) y he añadido MongoDB mediante comunicación mongoose. 
 
 
 ### Construído con
@@ -54,6 +54,8 @@ Para el principio necesitaríamos tener instalado Node en nuestra máquina. Una 
 En principio necesitamos tener un usuario: no he querido quebrarme mucho la cabeza, así que para usar el servicio necesitaremos Postman y que en cada request, en los headers, haya un parámetro llamado "authtoken". El sistema reconoce los siguientes, teacher y student. Tener authtoken=teacher te permite acceder al contenido para profesores exclusivo, y tener el authtoken=student te permite acceder a la plataforma de cursos correctamente.
 
 De no existir el parámetro anteriormente mencionado la API nos responderá un AuthorizationError y no podremos consumirla.
+
+El sistema de preguntas, he decidido implementarlo mediante una jerarquía para cada alumno. Cuando un alumno se somete a las preguntas, se llama a la API, para obtener la primera pregunta para la lección dada. Mediante la jerarquía (un número, ascendente del 0 a n, donde N sea el número de preguntas, ordenadas) podemos controlar el avance del alumno. Si por ejemplo estamos en la question de jerarquía 1, y el alumno no ha contestado bien, no podremos movernos a la jerarquía 2. Detectamos que es la última jerarquía cuando la llamada incremental de jerarquía retorne null / not found y asumimos que el alumno ha completado el curso.
 
 Hay varias peticiones que podremos realizar según el rol que proveamos y todas están contenidas en nuestros resolvers.ts
 

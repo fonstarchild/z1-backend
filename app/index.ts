@@ -5,12 +5,13 @@ import express from 'express'
 import { ApolloServerPluginDrainHttpServer, AuthenticationError } from 'apollo-server-core'
 import http from 'http'
 import { users } from './dataset'
+import Account from './models/accountSchema'
 import { connectToDb } from './database/connection'
 
 async function startApolloServer (schema: any, resolvers: any): Promise<void> {
   const app = express()
   const httpServer = http.createServer(app)
-
+  await connectToDb()
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
@@ -27,7 +28,6 @@ async function startApolloServer (schema: any, resolvers: any): Promise<void> {
         return { user };
       },
   })
-  await connectToDb()
   await server.start()
 
   server.applyMiddleware({ app })

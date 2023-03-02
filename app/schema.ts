@@ -6,6 +6,7 @@ const Schema = gql`
         id: ID!
         authtoken: String
         role: String
+        username: String
         seenContent: [TextContent]
     }
 
@@ -36,14 +37,14 @@ const Schema = gql`
         id: ID!
         question: String
         type: String
+        hierarchy: Int
         lesson: Lesson!
         correctAnswer: [String]
-        registeredAnswer: Answer
     }
 
     type Answer {
         id: ID!
-        user: Account!
+        student: Account!
         question: QuestionContent!
         answer: [String]
         correct: Boolean
@@ -51,20 +52,22 @@ const Schema = gql`
 
     type Query {
         getAllLevels: [Level]
-        getLevel(id: Int): Level
+        getLevel(id: ID): Level
         getStudents: [Account]
-        isContentViewed(textContent: Int): Boolean
-        canTheStudentGoForward(question: Int): Boolean
-        getLessonsByLevel(level: Int): [Lesson]
-        getContentByLesson(lesson: Int): [TextContent]
-        getQuestionsForALesson(lesson: Int): [QuestionContent]
-        getAnswersOfAStudent(student: Int): [Answer]
+        isContentViewed(textContent: ID): Boolean
+        canTheStudentGoForward(question: ID): Boolean
+        getLessonsByLevel(level: ID): [Lesson]
+        getContentByLesson(lesson: ID): [TextContent]
+        getQuestionsForALesson(lesson: ID): [QuestionContent]
+        getAnswersOfAStudent(student: ID): [Answer]
     }
 
     type Mutation {
         addLevel(title: String, description: String): Level
-        addLessonForALevel(title: String, description: String, level: String): Lesson
-        giveAnswer(answer: Int): Answer
+        addTestStudent(username: String, authToken: String): Account
+        addLessonForALevel(title: String, description: String, level: ID): Lesson
+        addQuestionForALesson(lesson: ID, question: String, type: String, correctAnswer: [String]): QuestionContent
+        giveAnswer(question: ID, answer: [String]): Answer
     }
 `
 
