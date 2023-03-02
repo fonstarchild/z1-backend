@@ -12,23 +12,42 @@ export const levels: Array<{ id: number, title: string, description: string }> =
 ]
 
 export const lessons: Array<{ id: number, title: string, description: string, level: number }> = [
-  { id: 1, title: 'Basic Ethics', description: 'Lorem Ipsum', level: 1 },
+  { id: 1, title: 'Basic Ethics', description: 'Ethic for trainees', level: 1 },
   { id: 2, title: 'Basic Physics', description: 'Lorem ipsum basic', level: 1 },
   { id: 3, title: 'Advanced Physics', description: 'Advanced level', level: 3 }
 ]
 
-export const content: Array<{
-  id: number
-  question?: string
-  type?: string
-  lesson: number
-  content?: string
-  image?: string
-  correctAnswer?: string[]
-}> = [
-  { id: 1, question: 'Who was the king of Spain?', type: ANSWER_TYPES.SIMPLE, correctAnswer: ['Melchor'], lesson: 1 },
-  { id: 2, question: 'Select the two kings between the options', type: ANSWER_TYPES.MULTIPLE, correctAnswer: ['Melchor', 'JuanCarlos1'], lesson: 1 },
-  { id: 3, question: 'Tell me what you know about the sky', type: ANSWER_TYPES.FREE, lesson: 1 },
-  { id: 4, content: 'Some Lorem Ipsum about it', image: 'srcwhatever', lesson: 1 }
+export const textContent: Array<{
+    id: number
+    content: string,
+    image: string,
+    lesson: number
+  }> = [
+    { id: 1, content: "Ethic basics 1", image: "src whatever", lesson: 1 },
+    { id: 1, content: "Ethic basics 2", image: "src whatever", lesson: 1 },
+  ]
 
+export const questions: Array<{
+    id: number
+    question: string
+    type: string
+    lesson: number
+    correctAnswer: string[]
+  }> = [
+    { id: 1, 
+      question: 'Who was the king of Spain?', 
+      type: ANSWER_TYPES.SIMPLE, 
+      correctAnswer: ['Melchor'], 
+      lesson: 1 
+    },
+  ]
+  
+export const answers: Array<{
+    id: number,
+    user: number,
+    question: number,
+    answer: string[],
+    correct: boolean,
+}> = [
+    { id: 1, user: 1, question: 1, answer: ["Melchor"], correct: true}
 ]

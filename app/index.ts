@@ -2,8 +2,9 @@ import { ApolloServer } from 'apollo-server-express'
 import Schema from './schema'
 import Resolvers from './resolvers'
 import express from 'express'
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import { ApolloServerPluginDrainHttpServer, AuthenticationError } from 'apollo-server-core'
 import http from 'http'
+import { users } from './dataset'
 
 async function startApolloServer (schema: any, resolvers: any): Promise<void> {
   const app = express()
@@ -12,14 +13,18 @@ async function startApolloServer (schema: any, resolvers: any): Promise<void> {
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
-    // context: ({ req }) => {
-    //     const token = req.headers.authorization || 'notoken';
-    //     if(token==='notoken') {
-    //        throw new AuthenticationError("You need to be logged in to access the courses")
-    //     }
-    // Filtrar la lista del dataset de usuarios aqui y definir si un contenido es apto para un rol, por contexto.
-    //   },
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    context: async ({ req }) => {
+        const token = req.headers.authorization || 'notoken';
+        if( token==='notoken' ) {
+           throw new AuthenticationError("You need an user token to be able to work.")
+        }
+        const user = users.find(user=>user.authToken === token);
+        if(!user){
+          throw new AuthenticationError("Provided token is invalid")
+        }
+        return { user };
+      },
   })
 
   await server.start()

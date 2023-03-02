@@ -21,10 +21,9 @@ const Schema = gql`
         title: String!
         description: String!
         level: Level!
-        content: [Content]
+        content: [TextContent]
+        questions: [QuestionContent]
     }
-
-    union Content = TextContent | QuestionContent
 
     type TextContent {
         id: ID! 
@@ -46,19 +45,21 @@ const Schema = gql`
         id: ID!
         question: QuestionContent!
         answer: [String]
+        correct: Boolean!
     }
 
     type Query {
         getAllLevels: [Level]
         getLevel(id: Int): Level
         getLessonsByLevel(level: Int): [Lesson]
-        getContentByLesson(lesson: Int): [Content]
-        getQuestionsForALesson(lesson: Int): [Content]
+        getContentByLesson(lesson: Int): [TextContent]
+        getQuestionsForALesson(lesson: Int): [QuestionContent]
     }
 
     type Mutation {
         addLevel(title: String, description: String): Level
         addLessonForALevel(title: String, description: String, level: String): Lesson
+        giveAnswer(answer: Int): Answer
     }
 `
 
