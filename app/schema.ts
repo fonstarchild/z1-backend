@@ -1,5 +1,5 @@
 
-import { gql } from "apollo-server-express"; 
+import { gql } from 'apollo-server-express'
 
 const Schema = gql`
     type Account {
@@ -62,4 +62,4 @@ const Schema = gql`
     }
 `
 
-export default Schema;
+export default Schema
