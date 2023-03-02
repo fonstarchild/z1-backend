@@ -58,12 +58,19 @@ De no existir el parámetro anteriormente mencionado la API nos responderá un A
 Hay varias peticiones que podremos realizar según el rol que proveamos y todas están contenidas en nuestros resolvers.ts
 
 getAllLevels: Retorna todos los niveles del LMS existentes.
+
 getStudents: Retorna los estudiantes de la plataforma.
+
 isContentViewed: Para un usuario logueado, registra si el contenido provisto ha sido visitado.
+
 canTheStudentGoForward: Para una pregunta objetivo, registramos si el usuario ha contestado correctamente a la pregunta. De no haberla contestado se responderá false y podremos evitar en el frontend su paso adelante.
+
 getLessonsByLevel: Retorna todas las lecciones por nivel.
+
 getContentByLesson: Retorna todos los contenidos de tipo texto (con posible imagen) para una lección dada.
+
 getQuestionsForALesson: Para una lección dada retorna todas las preguntas disponibles.
+
 getAnswersOfAStudent: Retorna todas las respuestas del estudiante objetivo.
 
 
