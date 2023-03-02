@@ -5,10 +5,10 @@ export const users: Array<{ id: number, authToken: string, role: string, name: s
   { id: 2, authToken: 'student', role: ROLES.STUDENT, name: 'Teovigildo', seenContent: [1, 2] }
 ]
 
-export const levels: Array<{ id: number, title: string, description: string }> = [
-  { id: 1, title: 'Basic', description: 'Beginner level' },
-  { id: 2, title: 'Intermediate', description: 'Intermediate level' },
-  { id: 3, title: 'Advanced', description: 'Advanced level' }
+export const levels: Array<{ id: number, title: string, description: string, lessons: number[] }> = [
+  { id: 1, title: 'Basic', description: 'Beginner level', lessons: [1, 2] },
+  { id: 2, title: 'Intermediate', description: 'Intermediate level', lessons: [] },
+  { id: 3, title: 'Advanced', description: 'Advanced level', lessons: [3] }
 ]
 
 export const lessons: Array<{ id: number, title: string, description: string, level: number }> = [

@@ -1,14 +1,18 @@
 import { AuthenticationError } from 'apollo-server'
 import { levels, lessons, questions, textContent, answers, users } from './dataset'
 import { isAStudent, isATeacher } from './utils'
+import Level from "./models/levelSchema";
+import Lesson from "./models/lessonSchema";
 
 const Resolvers = {
 
   Query: {
-    getAllLevels: () => levels,
+    getAllLevels: async () => {
+     const allLevels = await Level.find({}).populate('lessons').exec();;
+     return allLevels;
+    },
 
     getLevel: (_: any, args: any) => {
-      console.log(args)
       return levels.find((level) => level.id === args.id)
     },
 
@@ -50,31 +54,36 @@ const Resolvers = {
     },
   },
   Mutation: {
-    addLevel: (_: any, args: any, context: any) => {
+    addLevel: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError("The user is not a teacher.")
       }
-      const newLevel = {
-        id: levels.length + 1,
+      const newLevel = new Level({
         title: args.title,
         description: args.description
-      }
-      levels.push(newLevel)
+      })
+      await newLevel.save();
       return newLevel
     },
 
-    addLessonForALevel: (_: any, args: any, context: any) => {
+    addLessonForALevel: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError("The user is not a teacher.")
       }
-      const newLesson = {
-        id: levels.length + 1,
-        title: args.title,
-        description: args.description,
-        level: args.level
+      const targetLevel = await Level.findOne({ title: args.level }).exec();
+      
+      if(targetLevel){
+        const newLesson = new Lesson({
+          title: args.title,
+          description: args.description,
+          level: targetLevel._id
+        })
+        await newLesson.save();
+        targetLevel.lessons.push(newLesson._id)
+        await targetLevel.save();
+        return newLesson
       }
-      lessons.push(newLesson)
-      return newLesson
+      return null;
     },
 
     giveAnswer: (_: any, args: any, context: any) => {
