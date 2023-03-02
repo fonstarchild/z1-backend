@@ -6,7 +6,7 @@ const Schema = gql`
         id: ID!
         authtoken: String
         role: String
-        seenContent: [Lesson]
+        seenContent: [TextContent]
     }
 
     type Level {
@@ -43,17 +43,22 @@ const Schema = gql`
 
     type Answer {
         id: ID!
+        user: Account!
         question: QuestionContent!
         answer: [String]
-        correct: Boolean!
+        correct: Boolean
     }
 
     type Query {
         getAllLevels: [Level]
         getLevel(id: Int): Level
+        getStudents: [Account]
+        isContentViewed(textContent: Int): Boolean
+        canTheStudentGoForward(question: Int): Boolean
         getLessonsByLevel(level: Int): [Lesson]
         getContentByLesson(lesson: Int): [TextContent]
         getQuestionsForALesson(lesson: Int): [QuestionContent]
+        getAnswersOfAStudent(student: Int): [Answer]
     }
 
     type Mutation {

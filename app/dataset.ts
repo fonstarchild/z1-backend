@@ -1,8 +1,8 @@
 import { ANSWER_TYPES, ROLES } from './constants'
 
-export const users: Array<{ id: number, authToken: string, role: string, name: string }> = [
-  { id: 1, authToken: 'teacher', role: ROLES.TEACHER, name: 'Godofrasio' },
-  { id: 2, authToken: 'student', role: ROLES.STUDENT, name: 'Teovigildo' }
+export const users: Array<{ id: number, authToken: string, role: string, name: string, seenContent: number[] }> = [
+  { id: 1, authToken: 'teacher', role: ROLES.TEACHER, name: 'Godofrasio', seenContent: [] },
+  { id: 2, authToken: 'student', role: ROLES.STUDENT, name: 'Teovigildo', seenContent: [1, 2] }
 ]
 
 export const levels: Array<{ id: number, title: string, description: string }> = [
@@ -44,10 +44,10 @@ export const questions: Array<{
   
 export const answers: Array<{
     id: number,
-    user: number,
+    student: number,
     question: number,
     answer: string[],
     correct: boolean,
 }> = [
-    { id: 1, user: 1, question: 1, answer: ["Melchor"], correct: true}
+    { id: 1, student: 1, question: 1, answer: ["Melchor"], correct: true}
 ]
