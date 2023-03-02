@@ -5,7 +5,7 @@ import express from 'express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import http from 'http'
 
-async function startApolloServer(schema: any, resolvers: any) {
+async function startApolloServer (schema: any, resolvers: any): Promise<void> {
   const app = express()
   const httpServer = http.createServer(app)
 
@@ -20,7 +20,7 @@ async function startApolloServer(schema: any, resolvers: any) {
     //     }
     // Filtrar la lista del dataset de usuarios aqui y definir si un contenido es apto para un rol, por contexto.
     //   },
-  }) as any
+  })
 
   await server.start()
 
@@ -29,8 +29,7 @@ async function startApolloServer(schema: any, resolvers: any) {
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve)
   )
-
   console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
 }
 
-startApolloServer(Schema, Resolvers)
+void startApolloServer(Schema, Resolvers)
