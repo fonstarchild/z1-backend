@@ -13,12 +13,13 @@ async function startApolloServer(schema: any, resolvers: any) {
     typeDefs: schema,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: ({ req }) => {
-        const token = req.headers.authorization || 'notoken';
-        if(token==='notoken') {
-           throw new AuthenticationError("You need to be logged in to access the courses")
-        }
-      },
+    // context: ({ req }) => {
+    //     const token = req.headers.authorization || 'notoken';
+    //     if(token==='notoken') {
+    //        throw new AuthenticationError("You need to be logged in to access the courses")
+    //     }
+    // Filtrar la lista del dataset de usuarios aqui y definir si un contenido es apto para un rol, por contexto.
+    //   },
   }) as any;
 
   await server.start(); 
