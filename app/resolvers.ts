@@ -2,6 +2,7 @@ import { AuthenticationError } from 'apollo-server'
 import { levels, lessons, questions, textContent, answers, users } from './dataset'
 import { isATeacher } from './utils'
 import Level from "./models/levelSchema";
+import TextContent from "./models/textContentSchema";
 import Lesson from "./models/lessonSchema";
 import Account from './models/accountSchema';
 import Question from './models/questionSchema';
@@ -38,16 +39,17 @@ const Resolvers = {
       if(targetAnswer){
         return targetAnswer.correct;
       }
-      return false;    
+      return false;   
     },
 
     getLessonsByLevel: async (_: any, args: any, context: any) => {
-      const allLevels = await Lesson.find({level: args.level}).populate('questions').exec();
+      const allLevels = await Lesson.find({level: args.level}).populate('content').exec();
       return allLevels;
     },
 
-    getContentByLesson: (_: any, args: any) => {
-      return textContent.filter((textCont) => textCont.lesson === args.lesson)
+    getContentByLesson: async (_: any, args: any) => {
+      const filteredContent = await TextContent.find({lesson: args.lesson}).exec();
+      return filteredContent;
     },
 
     getQuestionsForALesson: (_: any, args: any) => {
@@ -74,6 +76,26 @@ const Resolvers = {
       return newLevel
     },
 
+    addTextContentForALesson: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError("The user is not a teacher.")
+      }
+      const targetLesson = await Lesson.findById(args.lesson).exec();
+      if(targetLesson){
+        const newTextContent = new TextContent({
+          content: args.content,
+          hierarchy: targetLesson.content? targetLesson.content.length + 1 : 1,
+          title: args.title,
+          image: args.image,
+        })
+        await newTextContent.save()
+        targetLesson.content.push(newTextContent._id);
+        await targetLesson.save()
+        return newTextContent;
+      }
+      return null;
+    },
+
     addQuestionForALesson: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError("The user is not a teacher.")
@@ -83,7 +105,7 @@ const Resolvers = {
         const newQuestion = new Question({
           question: args.question,
           type: args.type,
-          hierarchy: targetLesson.hierarchy === 1 ? targetLesson.hierarchy++ : 1,
+          hierarchy: targetLesson.questions? targetLesson.questions.length + 1 : 1,
           correctAnswer: args.correctAnswer,
           lesson: targetLesson._id,
         })

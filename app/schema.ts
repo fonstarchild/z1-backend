@@ -28,6 +28,8 @@ const Schema = gql`
 
     type TextContent {
         id: ID! 
+        title: String
+        hierarchy: Int
         content: String
         image: String
         lesson: Lesson!
@@ -65,6 +67,7 @@ const Schema = gql`
     type Mutation {
         addLevel(title: String, description: String): Level
         addTestStudent(username: String, authToken: String): Account
+        addTextContentForALesson(lesson: ID, content: String, image: String, title: String): TextContent
         addLessonForALevel(title: String, description: String, level: ID): Lesson
         addQuestionForALesson(lesson: ID, question: String, type: String, correctAnswer: [String]): QuestionContent
         giveAnswer(question: ID, answer: [String]): Answer
