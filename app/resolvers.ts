@@ -84,9 +84,10 @@ const Resolvers = {
       if(targetLesson){
         const newTextContent = new TextContent({
           content: args.content,
-          hierarchy: targetLesson.content? targetLesson.content.length + 1 : 1,
+          hierarchy: targetLesson.content ? targetLesson.content.length + 1 : 1,
           title: args.title,
           image: args.image,
+          lesson: args.lesson
         })
         await newTextContent.save()
         targetLesson.content.push(newTextContent._id);
