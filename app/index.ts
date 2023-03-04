@@ -4,7 +4,6 @@ import Resolvers from './resolvers'
 import express from 'express'
 import { ApolloServerPluginDrainHttpServer, AuthenticationError } from 'apollo-server-core'
 import http from 'http'
-import { users } from './dataset'
 import Account from './models/accountSchema'
 import { connectToDb } from './database/connection'
 
@@ -21,7 +20,7 @@ async function startApolloServer (schema: any, resolvers: any): Promise<void> {
         if( token==='notoken' ) {
            throw new AuthenticationError("You need an user token to be able to work.")
         }
-        const user = users.find(user=>user.authToken === token);
+        const user = await Account.findOne({ authtoken: token}).exec();
         if(!user){
           throw new AuthenticationError("Provided token is invalid")
         }

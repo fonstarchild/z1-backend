@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server'
-import { levels, lessons, questions, textContent, answers, users } from './dataset'
+import { levels, questions, answers } from './dataset'
 import { isATeacher } from './utils'
 import Level from "./models/levelSchema";
 import TextContent from "./models/textContentSchema";
@@ -13,6 +13,14 @@ import { ANSWER_TYPES, ROLES } from './constants';
 
 const Resolvers = {
   Query: {
+    whoAmI: async (_: any, args: any, context: any) => {
+      // We could return the user of the context directly,
+      // but here the aim is to return your seen content too
+      // so we need to populate.
+      const targetUser = await Account.findById(context.user._id).populate('seenContent').exec();
+      return targetUser;
+    },
+
     getAllLevels: async () => {
      const allLevels = await Level.find({}).populate('lessons').exec();
      return allLevels;
@@ -53,14 +61,14 @@ const Resolvers = {
     },
 
     getQuestionsForALesson: (_: any, args: any) => {
-      return questions.filter((question) => question.lesson === args.lesson)
+      return questions.filter((question) => question.lesson === args.lesson);
     },
 
     getAnswersOfAStudent: (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError("The user is not a teacher.")
       }
-      return answers.filter((answer) => answer.student === args.student)
+      return answers.filter((answer) => answer.student === args.student);
     },
   },
   Mutation: {
@@ -118,6 +126,19 @@ const Resolvers = {
       return null;
     },
 
+    // DANGER: This method should be deleted. It´s only to fill
+    // a teacher in the database to play with in the test.
+    addTeacher: async (_: any, args: any) => {
+      const teacher = new Account({
+        username: "Admin",
+        authtoken: "teacher",
+        role: ROLES.TEACHER,
+        seenContent: []
+      })
+      await teacher.save();
+      return teacher;
+    },
+
     addTestStudent: async (_: any, args: any, context: any) => {
       const newStudent = new Account({
         username: args.username,
@@ -145,6 +166,22 @@ const Resolvers = {
         targetLevel.lessons.push(newLesson._id)
         await targetLevel.save();
         return newLesson
+      }
+      return null;
+    },
+
+    // Doubt here: I wanted to set it on mutation because it is really modifying
+    // a model, but still, it is somewhat a query...
+    getTextContentDetail: async(_:any, args: any, context: any) => {
+      const targetContent = await TextContent.findById(args.content);
+      const { user } = context;
+      // As we navigate thru text content we register it on the user
+      if(user && targetContent){
+        if(!user.seenContent.includes(args.content)){
+          user.seenContent.push(targetContent._id);
+          await user.save();
+        }
+        return targetContent;
       }
       return null;
     },

@@ -53,6 +53,7 @@ const Schema = gql`
     }
 
     type Query {
+        whoAmI: Account
         getAllLevels: [Level]
         getLevel(id: ID): Level
         getStudents: [Account]
@@ -66,6 +67,8 @@ const Schema = gql`
 
     type Mutation {
         addLevel(title: String, description: String): Level
+        getTextContentDetail(content: ID): TextContent
+        addTeacher: Account
         addTestStudent(username: String, authToken: String): Account
         addTextContentForALesson(lesson: ID, content: String, image: String, title: String): TextContent
         addLessonForALevel(title: String, description: String, level: ID): Lesson
