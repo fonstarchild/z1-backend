@@ -227,50 +227,35 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Level.deleteOne({ id: args.level },  (err: any) => {
-        if (err) throw new Error("There has been a problem with deletion.")
-        // deleted at most one tank document
-      });
+      await Level.deleteOne({ _id: args.level });
       return null;
     },
     deleteLesson: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Lesson.deleteOne({ id: args.lesson },  (err: any) => {
-        if (err) throw new Error("There has been a problem with deletion.")
-        // deleted at most one tank document
-      });
+      await Lesson.deleteOne({ _id: args.lesson });
       return null;
     },
     deleteContent: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await TextContent.deleteOne({ id: args.content },  (err: any) => {
-        if (err) throw new Error("There has been a problem with deletion.")
-        // deleted at most one tank document
-      });
+      await TextContent.deleteOne({ _id: args.content });
       return null;
     },
     deleteQuestion: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Question.deleteOne({ id: args.question },  (err: any) => {
-        if (err) throw new Error("There has been a problem with deletion.")
-        // deleted at most one tank document
-      });
+      await Question.deleteOne({ _id: args.question });
       return null;
     },
     deleteAnswer: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Answer.deleteOne({ id: args.answer },  (err: any) => {
-        if (err) throw new Error("There has been a problem with deletion.")
-        // deleted at most one tank document
-      });
+      await Answer.deleteOne({ _id: args.answer });
       return null;
     },
     giveAnswer: async (_: any, args: any, context: any) => {
