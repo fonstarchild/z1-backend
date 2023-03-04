@@ -227,7 +227,7 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      Level.deleteOne({ id: args.level },  (err: any) => {
+      await Level.deleteOne({ id: args.level },  (err: any) => {
         if (err) throw new Error("There has been a problem with deletion.")
         // deleted at most one tank document
       });
@@ -237,7 +237,7 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      Lesson.deleteOne({ id: args.lesson },  (err: any) => {
+      await Lesson.deleteOne({ id: args.lesson },  (err: any) => {
         if (err) throw new Error("There has been a problem with deletion.")
         // deleted at most one tank document
       });
@@ -247,7 +247,7 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      TextContent.deleteOne({ id: args.content },  (err: any) => {
+      await TextContent.deleteOne({ id: args.content },  (err: any) => {
         if (err) throw new Error("There has been a problem with deletion.")
         // deleted at most one tank document
       });
@@ -257,7 +257,7 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      Question.deleteOne({ id: args.question },  (err: any) => {
+      await Question.deleteOne({ id: args.question },  (err: any) => {
         if (err) throw new Error("There has been a problem with deletion.")
         // deleted at most one tank document
       });
@@ -267,7 +267,7 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      Answer.deleteOne({ id: args.answer },  (err: any) => {
+      await Answer.deleteOne({ id: args.answer },  (err: any) => {
         if (err) throw new Error("There has been a problem with deletion.")
         // deleted at most one tank document
       });
