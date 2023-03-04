@@ -60,8 +60,9 @@ const Resolvers = {
       return filteredContent;
     },
 
-    getQuestionsForALesson: (_: any, args: any) => {
-      return questions.filter((question) => question.lesson === args.lesson);
+    getQuestionsForALesson: async (_: any, args: any) => {
+      const targetQuestions = await Question.find({lesson: args.lesson}).exec();
+      return targetQuestions;
     },
 
     getAnswersOfAStudent: (_: any, args: any, context: any) => {
