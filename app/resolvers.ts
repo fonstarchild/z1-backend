@@ -43,14 +43,6 @@ const Resolvers = {
       return context.user.seenContent.includes(args.textContent)
     },
 
-    canTheStudentGoForward: (_: any, args: any, context: any) => {
-      const targetAnswer = answers.find(answer => answer.student === context.user.id && answer.question === args.question)
-      if (targetAnswer != null) {
-        return targetAnswer.correct
-      }
-      return false
-    },
-
     getLessonsByLevel: async (_: any, args: any, context: any) => {
       const allLevels = await Lesson.find({ level: args.level }).populate('content').exec()
       return allLevels

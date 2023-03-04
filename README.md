@@ -22,16 +22,21 @@ La implementación del proyecto se ha hecho tal y como se pedía. Al principio, 
 * Apollo Server
 * Typescript
 * GraphQL
+* MongoDB
 
 
 ### Requisitos
 
-Para el principio necesitaríamos tener instalado Node en nuestra máquina. Una vez instalada la última versión LTS, podemos ejecutar en la raíz del proyecto:
+Para el principio necesitaríamos tener instalado Node en nuestra máquina. Una vez instalada la última versión LTS, podemos ejecutar en la raíz del proyecto.
 
 * npm
   ```sh
   npm install 
   ```
+
+También necesitaremos tener instalado MongoDB. El proyecto se ha hecho en una máquina de Windows, con el mongodb expuesto como servicio en el puerto por defecto, 27017. Con instalarlo, tener una base de datos que se llame "z1backend" (sin guión, ojo), y no tener ninguna autenticación, debería funcionar.
+
+No he añadido autenticación porque realmente para un test de éstos no era necesario, no obstante si es necesario crear un archivo .cfg con los datos pertinentes por favor, avisadme.
 
 ### Comandos para ejecutar
 
@@ -51,29 +56,18 @@ Para el principio necesitaríamos tener instalado Node en nuestra máquina. Una 
 
 ## Explicación del proyecto
 
-En principio necesitamos tener un usuario: no he querido quebrarme mucho la cabeza, así que para usar el servicio necesitaremos Postman y que en cada request, en los headers, haya un parámetro llamado "authtoken". El sistema reconoce los siguientes, teacher y student. Tener authtoken=teacher te permite acceder al contenido para profesores exclusivo, y tener el authtoken=student te permite acceder a la plataforma de cursos correctamente.
+En principio necesitamos tener un usuario. Hay una llamada para crear un administrador sin restricción llamada AddTestTeacher. El token de autorización es el que nosotros proveamos, por simplificar. Normalmente se generaría una UUIDv4 en backend pero por el test decidí mantenerlo de manera simple. Provees, por ejemplo "patata" y se creará un usuario con rol teacher.
+
+El teacher tiene acceso a todo el entorno menos al sistema de preguntas que está diseñado para el estudiante. Aun así el teacher podrá acceder y ver todas las preguntas con sus respuestas. También diseñé una llamada para crear estudiantes Test, pudiendo especificar su username y su token, así se puede probar en todo momento.
+
+El student podrá ver los niveles, sus lecciones, su contenido de texto y acceder a la función quiz.
 
 De no existir el parámetro anteriormente mencionado la API nos responderá un AuthorizationError y no podremos consumirla.
 
-El sistema de preguntas, he decidido implementarlo mediante una jerarquía para cada alumno. Cuando un alumno se somete a las preguntas, se llama a la API, para obtener la primera pregunta para la lección dada. Mediante la jerarquía (un número, ascendente del 0 a n, donde N sea el número de preguntas, ordenadas) podemos controlar el avance del alumno. Si por ejemplo estamos en la question de jerarquía 1, y el alumno no ha contestado bien, no podremos movernos a la jerarquía 2. Detectamos que es la última jerarquía cuando la llamada incremental de jerarquía retorne null / not found y asumimos que el alumno ha completado el curso.
+El sistema de preguntas está diseñado como si fuera un examen. Tras consumir el contenido de la plataforma, el estudiante podrá realizar este examen a través de la llamada getQuestionForStudentInLesson. Ésta llamada responderá, por orden de jerarquía (la cual se asigna automáticamente), la pregunta, una por una, en orden. Una vez el estudiante responda correctamente, la misma llamada responderá la siguiente pregunta, así, hasta que no haya más, y retornará null, y habremos asumido que el alumno habrá completado el examen. Por supuesto las preguntas podrán ser de tipo simple, multiple, y free, según el guión de la prueba.
 
-Hay varias peticiones que podremos realizar según el rol que proveamos y todas están contenidas en nuestros resolvers.ts
+Hay varias peticiones que podremos realizar según el rol que proveamos y todas están contenidas en nuestros resolvers.ts. Asi mismo, adjunto una colección Postman preparara para atacar la API, por simplicidad de uso.
 
-getAllLevels: Retorna todos los niveles del LMS existentes.
-
-getStudents: Retorna los estudiantes de la plataforma.
-
-isContentViewed: Para un usuario logueado, registra si el contenido provisto ha sido visitado.
-
-canTheStudentGoForward: Para una pregunta objetivo, registramos si el usuario ha contestado correctamente a la pregunta. De no haberla contestado se responderá false y podremos evitar en el frontend su paso adelante.
-
-getLessonsByLevel: Retorna todas las lecciones por nivel.
-
-getContentByLesson: Retorna todos los contenidos de tipo texto (con posible imagen) para una lección dada.
-
-getQuestionsForALesson: Para una lección dada retorna todas las preguntas disponibles.
-
-getAnswersOfAStudent: Retorna todas las respuestas del estudiante objetivo.
 
 
 ## Contacto
