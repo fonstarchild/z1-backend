@@ -60,6 +60,7 @@ const Schema = gql`
         isContentViewed(textContent: ID): Boolean
         canTheStudentGoForward(question: ID): Boolean
         getLessonsByLevel(level: ID): [Lesson]
+        getQuestionForStudentInALesson(lesson: ID): QuestionContent
         getContentByLesson(lesson: ID): [TextContent]
         getQuestionsForALesson(lesson: ID): [QuestionContent]
         getAnswersOfAStudent(student: ID): [Answer]
@@ -69,7 +70,7 @@ const Schema = gql`
         addLevel(title: String, description: String): Level
         getTextContentDetail(content: ID): TextContent
         addTeacher: Account
-        addTestStudent(username: String, authToken: String): Account
+        addTestStudent(username: String, authtoken: String): Account
         addTextContentForALesson(lesson: ID, content: String, image: String, title: String): TextContent
         addLessonForALevel(title: String, description: String, level: ID): Lesson
         addQuestionForALesson(lesson: ID, question: String, type: String, correctAnswer: [String]): QuestionContent

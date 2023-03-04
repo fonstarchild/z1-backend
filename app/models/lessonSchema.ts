@@ -9,4 +9,4 @@ const lessonSchema = new Schema({
     questions: [{ type: Schema.Types.ObjectId, ref: 'Question' }]
   });
 
-export default model('Lesson', lessonSchema);
+export default model( 'Lesson', lessonSchema );

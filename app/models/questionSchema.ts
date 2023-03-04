@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const questionSchema = new Schema({
     question: String,
     type: String,
-    hierarchy: Number,
+    hierarchy: { type: Number, required: true },
     correctAnswer: [String],
     lesson: { type: Schema.Types.ObjectId, ref: 'Lesson' },
   });

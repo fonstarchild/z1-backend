@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server'
 import { answers } from './dataset'
-import { isATeacher } from './utils'
+import { isAStudent, isATeacher } from './utils'
 import Level from "./models/levelSchema";
 import TextContent from "./models/textContentSchema";
 import Lesson from "./models/lessonSchema";
@@ -10,6 +10,7 @@ import Answer from './models/answerSchema';
 
 
 import { ANSWER_TYPES, ROLES } from './constants';
+import { Error } from 'mongoose';
 
 const Resolvers = {
   Query: {
@@ -54,6 +55,38 @@ const Resolvers = {
     getLessonsByLevel: async (_: any, args: any, context: any) => {
       const allLevels = await Lesson.find({level: args.level}).populate('content').exec();
       return allLevels;
+    },
+
+    getQuestionForStudentInALesson: async (_: any, args: any, context: any) => {
+      // Assumptions: we try to answer an existing question in a existing lesson.
+      // Only students should be able to answer. Teachers already know the answer
+      // an their correct answers can be seen on Question model.
+      if (!isAStudent(context.user)) {
+        throw new AuthenticationError("The user is not a student.")
+      }
+      // We retrieve the existing questions.
+      const questions = await Question.find({ lesson: args.lesson }).exec();
+      const orderedQuestions = questions.sort((a , b) => (a.hierarchy < b.hierarchy? -1 : 1))
+      if(!!orderedQuestions.length){
+       // Try to retrieve the answers.
+       const givenCorrectAnswers =  await Answer.find({
+        'question': { $in: orderedQuestions.map(question=>question.id)},
+        correct: true
+       })
+       if(!!!givenCorrectAnswers.length){
+        // If there´s no correct answers we just give the first one in hierarchy,
+        return orderedQuestions[0]
+       }
+       const listOfCorrectQuestionsId = givenCorrectAnswers.map(answer=>answer.question.toHexString());
+       // If not, we make an inverse intersection of the orderedQuestions
+       const unansweredQuestions = orderedQuestions.filter(question=>!listOfCorrectQuestionsId.includes(question.id));
+       // If there´s an empty list we can return null and infer, as there´s no more questions, the course has completed.
+       if(!!!unansweredQuestions.length){
+        return null
+       }
+       return unansweredQuestions[0]
+      }
+        throw new Error("The given lesson has not any questions");
     },
 
     getContentByLesson: async (_: any, args: any) => {
@@ -142,6 +175,9 @@ const Resolvers = {
     },
 
     addTestStudent: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError("The user is not a teacher.")
+      }
       const newStudent = new Account({
         username: args.username,
         authtoken: args.authtoken,
@@ -194,6 +230,14 @@ const Resolvers = {
       // Then, depending on the type, we do some verifications:
       let isCorrect: boolean = false;
       if(targetQuestion){
+        const hasTheQuestionBeenAnswered =  await Answer.find({
+          question: targetQuestion.id,
+          correct: true
+         })
+        if( !!hasTheQuestionBeenAnswered.length ){
+          // If the questions has been answered we should not be able to answer again.
+          return null;
+         }
         switch(targetQuestion.type){
           case ANSWER_TYPES.SIMPLE:
             isCorrect = targetQuestion.correctAnswer.includes(args.answer[0])
@@ -206,6 +250,8 @@ const Resolvers = {
             )
             break;
           case ANSWER_TYPES.FREE:
+            // We assume that is correct is free because isCorrect is used to advance
+            // to the next question in hierarchy
             isCorrect = true;
             break;
           default:
