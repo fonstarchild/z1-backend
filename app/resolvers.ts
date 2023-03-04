@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server'
-import { levels, questions, answers } from './dataset'
+import { answers } from './dataset'
 import { isATeacher } from './utils'
 import Level from "./models/levelSchema";
 import TextContent from "./models/textContentSchema";
@@ -26,9 +26,10 @@ const Resolvers = {
      return allLevels;
     },
 
-    getLevel: (_: any, args: any) => {
-      return levels.find((level) => level.id === args.id)
-    },
+    getLevel: async (_: any, args: any) => {
+      const targetLevel = await Level.findById(args.level).exec();
+      return targetLevel;
+   },
 
     getStudents: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
