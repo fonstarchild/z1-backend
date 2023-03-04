@@ -223,6 +223,56 @@ const Resolvers = {
       return null
     },
 
+    deleteLevel: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      Level.deleteOne({ id: args.level },  (err: any) => {
+        if (err) throw new Error("There has been a problem with deletion.")
+        // deleted at most one tank document
+      });
+      return null;
+    },
+    deleteLesson: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      Lesson.deleteOne({ id: args.lesson },  (err: any) => {
+        if (err) throw new Error("There has been a problem with deletion.")
+        // deleted at most one tank document
+      });
+      return null;
+    },
+    deleteContent: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      TextContent.deleteOne({ id: args.content },  (err: any) => {
+        if (err) throw new Error("There has been a problem with deletion.")
+        // deleted at most one tank document
+      });
+      return null;
+    },
+    deleteQuestion: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      Question.deleteOne({ id: args.question },  (err: any) => {
+        if (err) throw new Error("There has been a problem with deletion.")
+        // deleted at most one tank document
+      });
+      return null;
+    },
+    deleteAnswer: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      Answer.deleteOne({ id: args.answer },  (err: any) => {
+        if (err) throw new Error("There has been a problem with deletion.")
+        // deleted at most one tank document
+      });
+      return null;
+    },
     giveAnswer: async (_: any, args: any, context: any) => {
       // First we retrieve the question that the answer made was
       const targetQuestion = await Question.findById(args.question).exec()

@@ -75,6 +75,11 @@ const Schema = gql`
         addLessonForALevel(title: String, description: String, level: ID): Lesson
         addQuestionForALesson(lesson: ID, question: String, type: String, correctAnswer: [String]): QuestionContent
         giveAnswer(question: ID, answer: [String]): Answer
+        deleteLevel(level: ID): Level
+        deleteLesson(lesson: ID): Lesson
+        deleteContent(content: ID): TextContent
+        deleteQuestion(question: ID): QuestionContent
+        deleteAnswer(answer: ID): Answer
     }
 `
 
