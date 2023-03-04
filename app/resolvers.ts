@@ -293,9 +293,7 @@ const Resolvers = {
             break
           case ANSWER_TYPES.MULTIPLE:
             isCorrect = targetQuestion.correctAnswer.every(
-              answer => {
-                args.answer.includes(answer)
-              }
+              (answer: string) => args.answer.includes(answer)
             )
             break
           case ANSWER_TYPES.FREE:
