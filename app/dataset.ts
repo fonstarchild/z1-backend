@@ -18,36 +18,37 @@ export const lessons: Array<{ id: number, title: string, description: string, le
 ]
 
 export const textContent: Array<{
-    id: number
-    content: string,
-    image: string,
-    lesson: number
-  }> = [
-    { id: 1, content: "Ethic basics 1", image: "src whatever", lesson: 1 },
-    { id: 1, content: "Ethic basics 2", image: "src whatever", lesson: 1 },
-  ]
+  id: number
+  content: string
+  image: string
+  lesson: number
+}> = [
+  { id: 1, content: 'Ethic basics 1', image: 'src whatever', lesson: 1 },
+  { id: 1, content: 'Ethic basics 2', image: 'src whatever', lesson: 1 }
+]
 
 export const questions: Array<{
-    id: number
-    question: string
-    type: string
-    lesson: number
-    correctAnswer: string[]
-  }> = [
-    { id: 1, 
-      question: 'Who was the king of Spain?', 
-      type: ANSWER_TYPES.SIMPLE, 
-      correctAnswer: ['Melchor'], 
-      lesson: 1 
-    },
-  ]
-  
-export const answers: Array<{
-    id: number,
-    student: number,
-    question: number,
-    answer: string[],
-    correct: boolean,
+  id: number
+  question: string
+  type: string
+  lesson: number
+  correctAnswer: string[]
 }> = [
-    { id: 1, student: 1, question: 1, answer: ["Melchor"], correct: true}
+  {
+    id: 1,
+    question: 'Who was the king of Spain?',
+    type: ANSWER_TYPES.SIMPLE,
+    correctAnswer: ['Melchor'],
+    lesson: 1
+  }
+]
+
+export const answers: Array<{
+  id: number
+  student: number
+  question: number
+  answer: string[]
+  correct: boolean
+}> = [
+  { id: 1, student: 1, question: 1, answer: ['Melchor'], correct: true }
 ]
