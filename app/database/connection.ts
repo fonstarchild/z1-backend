@@ -10,10 +10,9 @@ export const connectToDb = async () => {
     })
 }
 
-
 export const connectDBForTesting = async (mongodbURI: string, dbName: string) => {
   if (!mongodbURI || !dbName) {
-    return Promise.reject('MongoDB URI or DB Name is not defined')
+    return await Promise.reject('MongoDB URI or DB Name is not defined')
   }
   try {
     await mongoose.connect(

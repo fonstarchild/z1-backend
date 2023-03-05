@@ -218,92 +218,92 @@ const Resolvers = {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      
-      const matchingFields = Object.keys(args).filter(value => Object.keys(Level.schema.paths).includes(value));
-      let update: any = new Object({});
-      for(let field of matchingFields){
+
+      const matchingFields = Object.keys(args).filter(value => Object.keys(Level.schema.paths).includes(value))
+      const update: any = new Object({})
+      for (const field of matchingFields) {
         update[field] = args[field]
       }
       const updatedObject = await Level.findByIdAndUpdate(args.level, update)
-      return updatedObject;
+      return updatedObject
     },
 
     updateLesson: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      
-      const matchingFields = Object.keys(args).filter(value => Object.keys(Lesson.schema.paths).includes(value));
-      let update: any = new Object({});
-      for(let field of matchingFields){
+
+      const matchingFields = Object.keys(args).filter(value => Object.keys(Lesson.schema.paths).includes(value))
+      const update: any = new Object({})
+      for (const field of matchingFields) {
         update[field] = args[field]
       }
       const updatedObject = await Lesson.findByIdAndUpdate(args.lesson, update)
-      return updatedObject;
+      return updatedObject
     },
 
     updateContent: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      
-      const matchingFields = Object.keys(args).filter(value => Object.keys(TextContent.schema.paths).includes(value));
-      let update: any = new Object({});
-      for(let field of matchingFields){
+
+      const matchingFields = Object.keys(args).filter(value => Object.keys(TextContent.schema.paths).includes(value))
+      const update: any = new Object({})
+      for (const field of matchingFields) {
         update[field] = args[field]
       }
       const updatedObject = await TextContent.findByIdAndUpdate(args.targetContent, update)
-      return updatedObject;
+      return updatedObject
     },
 
     updateQuestion: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      
-      const matchingFields = Object.keys(args).filter(value => Object.keys(Question.schema.paths).includes(value));
-      let update: any = new Object({});
-      for(let field of matchingFields){
+
+      const matchingFields = Object.keys(args).filter(value => Object.keys(Question.schema.paths).includes(value))
+      const update: any = new Object({})
+      for (const field of matchingFields) {
         update[field] = args[field]
       }
       const updatedObject = await Question.findByIdAndUpdate(args.targetQuestion, update)
-      return updatedObject;
+      return updatedObject
     },
 
     deleteLevel: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Level.deleteOne({ _id: args.level });
-      return null;
+      await Level.deleteOne({ _id: args.level })
+      return null
     },
     deleteLesson: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Lesson.deleteOne({ _id: args.lesson });
-      return null;
+      await Lesson.deleteOne({ _id: args.lesson })
+      return null
     },
     deleteContent: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await TextContent.deleteOne({ _id: args.content });
-      return null;
+      await TextContent.deleteOne({ _id: args.content })
+      return null
     },
     deleteQuestion: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Question.deleteOne({ _id: args.question });
-      return null;
+      await Question.deleteOne({ _id: args.question })
+      return null
     },
     deleteAnswer: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
         throw new AuthenticationError('The user is not a teacher.')
       }
-      await Answer.deleteOne({ _id: args.answer });
-      return null;
+      await Answer.deleteOne({ _id: args.answer })
+      return null
     },
     giveAnswer: async (_: any, args: any, context: any) => {
       // First we retrieve the question that the answer made was
