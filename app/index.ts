@@ -16,16 +16,16 @@ async function startApolloServer (schema: any, resolvers: any): Promise<void> {
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     context: async ({ req }) => {
-      const token = req.headers.tokenauth || 'notoken'
-      if (token === 'notoken') {
-        throw new AuthenticationError('You need an user token to be able to work.')
-      }
-      const user = await Account.findOne({ authtoken: token }).exec()
-      if (user == null) {
-        throw new AuthenticationError('Provided token is invalid')
-      }
-      return { user }
-    }
+        const token = req.headers.tokenauth || 'notoken';
+        if( token==='notoken' ) {
+           throw new AuthenticationError("You need an user token to be able to work.")
+        }
+        const user = await Account.findOne({ authtoken: token}).exec();
+        if(!user){
+          throw new AuthenticationError("Provided token is invalid")
+        }
+        return { user };
+      },
   })
   await server.start()
 

@@ -2,9 +2,10 @@
   "name": "z1backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "test": "jest",
     "dev-server": "npx nodemon app/index.ts",
     "lint": "eslint .  --ext .ts",
     "lint-fix": "eslint --fix .  --ext .ts"
@@ -23,17 +24,25 @@
     "concurrently": "^7.6.0",
     "express": "^4.18.2",
     "graphql": "^16.6.0",
+    "mongodb-memory-server-core": "^8.11.5",
     "mongoose": "^7.0.0",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
+    "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "babel-jest": "^29.4.3",
     "eslint": "^8.35.0",
     "eslint-config-standard-with-typescript": "^34.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
+    "jest": "^29.4.3",
+    "ts-jest": "^29.0.5",
     "typescript": "^4.9.5"
   }
 }
