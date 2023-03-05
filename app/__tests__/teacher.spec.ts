@@ -62,7 +62,7 @@ afterAll(async () => {
   await server.stop()
 })
 
-describe('Tests de integración', () => {
+describe('Tests de integración - Profesor', () => {
   const mockedLevel = {
     title: 'Basico',
     description:
