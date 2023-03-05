@@ -1,87 +1,82 @@
-import { MongoMemoryServer } from 'mongodb-memory-server-core'
-import mongoose from 'mongoose'
-import { ApolloServer } from 'apollo-server-express'
-import Schema from '../schema'
-import Resolvers from '../resolvers'
+import { MongoMemoryServer } from "mongodb-memory-server-core";
+import mongoose from "mongoose";
+import { ApolloServer } from "apollo-server-express";
+import Schema from "../schema";
+import Resolvers from "../resolvers";
 
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
-import express from 'express'
-import http from 'http'
-import { connectDBForTesting } from '../database/connection'
+import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import express from "express";
+import http from "http";
+import { connectDBForTesting } from "../database/connection";
 
-import Level from '../models/levelSchema'
+import Level from "../models/levelSchema";
 
-jest.setTimeout(20000)
-jest.retryTimes(3)
+jest.setTimeout(20000);
+jest.retryTimes(3);
 
-let mongod: any
-let server: any
+let mongod: any;
+let server: any;
 
-const mockDBName = 'shop'
+const mockDBName = "shop";
 
 beforeAll(async () => {
-  let mongoUri = ''
-  mongod = await MongoMemoryServer.create()
-  mongoUri = mongod.getUri()
-  await connectDBForTesting(mongoUri, mockDBName)
+  let mongoUri = "";
+  mongod = await MongoMemoryServer.create();
+  mongoUri = mongod.getUri();
+  await connectDBForTesting(mongoUri, mockDBName);
 
-  const app = express()
-  const httpServer = http.createServer(app)
+  const app = express();
+  const httpServer = http.createServer(app);
 
   server = new ApolloServer({
     typeDefs: Schema,
     resolvers: Resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: () => ({ user: { id: 1, role: 'teacher', username: 'pepito' } })
-  })
-  server.start()
-})
+    context: () => ({ user: { id: 1, role: "teacher", username: "pepito" } }),
+  });
+  server.start();
+});
 
-async function closeMongoConnection (
-  mongod: any,
-  mongooseConnection: any
-) {
+async function closeMongoConnection(mongod: any, mongooseConnection: any) {
   await new Promise<void>((resolve) => {
     setTimeout(() => {
-      resolve()
-    }, 2000)
+      resolve();
+    }, 2000);
     try {
       mongod?.stop().then(() => {
         mongooseConnection.close().then(() => {
-          resolve()
-        })
-      })
+          resolve();
+        });
+      });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  })
+  });
 }
 
 afterAll(async () => {
-  await closeMongoConnection(mongod, mongoose.connection)
-  await server.stop()
-})
+  await closeMongoConnection(mongod, mongoose.connection);
+  await server.stop();
+});
 
-describe('Tests de integración - Profesor', () => {
+describe("Tests de integración - Profesor", () => {
   const mockedLevel = {
-    title: 'Basico',
-    description:
-       'Para estudiantes basicos',
-    _id: '62d6b1998fb10a613f67a021'
-  }
+    title: "Basico",
+    description: "Para estudiantes basicos",
+    _id: "62d6b1998fb10a613f67a021",
+  };
 
   const mockedLesson = {
-    title: 'Leccion 1',
-    description:
-      'Aprender a testear',
-    level: '62d6b1998fb10a613f67a021',
-    _id: '62d6b1998fb10a613f22222'
-  }
+    title: "Leccion 1",
+    description: "Aprender a testear",
+    level: "62d6b1998fb10a613f67a021",
+    _id: "62d6b1998fb10a613f22222",
+  };
 
-  const publishedLevel = new Level(mockedLevel)
+  const publishedLevel = new Level(mockedLevel);
 
-  it('Debería devolver un nivel tras ser creado.', async () => {
-    await publishedLevel.save()
+  it("Debería devolver un nivel tras ser creado.", async () => {
+    await publishedLevel.save();
     const result = await server.executeOperation({
       query: `
             query {
@@ -91,12 +86,12 @@ describe('Tests de integración - Profesor', () => {
                  id
                }
              }
-             `
-    })
-    expect(result.data.getAllLevels).toHaveLength(1)
-    expect(result.data.getAllLevels[0].title).toBe(mockedLevel.title)
-  })
-  it('Los niveles han de responder las lecciones que añadamos', async () => {
+             `,
+    });
+    expect(result.data.getAllLevels).toHaveLength(1);
+    expect(result.data.getAllLevels[0].title).toBe(mockedLevel.title);
+  });
+  it("Los niveles han de responder las lecciones que añadamos", async () => {
     const result = await server.executeOperation({
       query: `
             mutation AddLesson($level: ID, $title: String, $description: String) {
@@ -109,16 +104,16 @@ describe('Tests de integración - Profesor', () => {
       variables: {
         level: publishedLevel.id,
         title: mockedLesson.title,
-        description: mockedLesson.description
+        description: mockedLesson.description,
       },
       context: {
         user: {
-          role: 'teacher'
-        }
-      }
-    })
+          role: "teacher",
+        },
+      },
+    });
     // Verificamos que la llamada anterior tenga las lecciones que hayamos añadido.
-    expect(result.data.addLessonForALevel.title).toBe(mockedLesson.title)
+    expect(result.data.addLessonForALevel.title).toBe(mockedLesson.title);
     const levelResult = await server.executeOperation({
       query: `
             query {
@@ -128,12 +123,14 @@ describe('Tests de integración - Profesor', () => {
                  }
                }
              }
-             `
-    })
-    expect(levelResult.data.getAllLevels[0].lessons).toHaveLength(1)
-    expect(levelResult.data.getAllLevels[0].lessons[0].title).toBe(mockedLesson.title)
-  })
-  it('El sistema de preguntas debería de estar forbidden para un teacher', async () => {
+             `,
+    });
+    expect(levelResult.data.getAllLevels[0].lessons).toHaveLength(1);
+    expect(levelResult.data.getAllLevels[0].lessons[0].title).toBe(
+      mockedLesson.title
+    );
+  });
+  it("El sistema de preguntas debería de estar forbidden para un teacher", async () => {
     const questionResult = await server.executeOperation({
       query: `
       query{
@@ -142,9 +139,8 @@ describe('Tests de integración - Profesor', () => {
             id
         }
       }
-             `
-    })
-    expect(questionResult.errors[0].message).toBe('The user is not a student.')
-  })
-
-})
+             `,
+    });
+    expect(questionResult.errors[0].message).toBe("The user is not a student.");
+  });
+});

@@ -22,6 +22,7 @@ La implementación del proyecto se ha hecho tal y como se pedía. Al principio, 
 * Typescript
 * GraphQL
 * MongoDB
+* Prettier para el codestyle
 * Jest (con ts-jest)
 * Mucho power metal de fondo para centrarme
 
@@ -65,7 +66,12 @@ No he añadido autenticación porque realmente para un test de éstos no era nec
     npm run build 
     ```
     Ejecuta la compilación typescript en una carpeta dist
-
+5. 
+    * npm
+    ```sh
+    npm run prettier 
+    ```
+    Verifica que los archivos sigan el codestyle definido, prettier
 
 ## Explicación del proyecto
 
@@ -80,6 +86,8 @@ De no existir el parámetro anteriormente mencionado la API nos responderá un A
 El sistema de preguntas está diseñado como si fuera un examen. Tras consumir el contenido de la plataforma, el estudiante podrá realizar este examen a través de la llamada getQuestionForStudentInLesson. Ésta llamada responderá, por orden de jerarquía (la cual se asigna automáticamente), la pregunta, una por una, en orden. Una vez el estudiante responda correctamente, la misma llamada responderá la siguiente pregunta, así, hasta que no haya más, y retornará null, y habremos asumido que el alumno habrá completado el examen. De no acertar la pregunta, retornará la misma. Por supuesto las preguntas podrán ser de tipo simple, multiple, y free, según el guión de la prueba. De no haber preguntas para la lección dada y ser llamada, lanzará error.
 
 Hay varias peticiones que podremos realizar según el rol que proveamos y todas están contenidas en nuestros resolvers.ts. Asi mismo, adjunto una colección Postman preparara para atacar la API, por simplicidad de uso.
+
+Decir que todas funcionan en base a las IDs. Todas las querys hechas son findById, porque pienso que una lección puede llamarse igual en dos niveles distintos y es mejor tenerlas identificadas lo máximo posible.
 
 
 

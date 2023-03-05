@@ -1,68 +1,64 @@
-import { MongoMemoryServer } from 'mongodb-memory-server-core'
-import mongoose from 'mongoose'
-import { ApolloServer } from 'apollo-server-express'
-import Schema from '../schema'
-import Resolvers from '../resolvers'
+import { MongoMemoryServer } from "mongodb-memory-server-core";
+import mongoose from "mongoose";
+import { ApolloServer } from "apollo-server-express";
+import Schema from "../schema";
+import Resolvers from "../resolvers";
 
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
-import express from 'express'
-import http from 'http'
-import { connectDBForTesting } from '../database/connection'
+import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
+import express from "express";
+import http from "http";
+import { connectDBForTesting } from "../database/connection";
 
-jest.setTimeout(20000)
-jest.retryTimes(3)
+jest.setTimeout(20000);
+jest.retryTimes(3);
 
-let mongod: any
-let server: any
+let mongod: any;
+let server: any;
 
-const mockDBName = 'shop'
+const mockDBName = "shop";
 
 beforeAll(async () => {
-  let mongoUri = ''
-  mongod = await MongoMemoryServer.create()
-  mongoUri = mongod.getUri()
-  await connectDBForTesting(mongoUri, mockDBName)
+  let mongoUri = "";
+  mongod = await MongoMemoryServer.create();
+  mongoUri = mongod.getUri();
+  await connectDBForTesting(mongoUri, mockDBName);
 
-  const app = express()
-  const httpServer = http.createServer(app)
+  const app = express();
+  const httpServer = http.createServer(app);
 
   server = new ApolloServer({
     typeDefs: Schema,
     resolvers: Resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    context: () => ({ user: { id: 1, role: 'student', username: 'juanito' } })
-  })
-  server.start()
-})
+    context: () => ({ user: { id: 1, role: "student", username: "juanito" } }),
+  });
+  server.start();
+});
 
-async function closeMongoConnection (
-  mongod: any,
-  mongooseConnection: any
-) {
+async function closeMongoConnection(mongod: any, mongooseConnection: any) {
   await new Promise<void>((resolve) => {
     setTimeout(() => {
-      resolve()
-    }, 2000)
+      resolve();
+    }, 2000);
     try {
       mongod?.stop().then(() => {
         mongooseConnection.close().then(() => {
-          resolve()
-        })
-      })
+          resolve();
+        });
+      });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  })
+  });
 }
 
 afterAll(async () => {
-  await closeMongoConnection(mongod, mongoose.connection)
-  await server.stop()
-})
+  await closeMongoConnection(mongod, mongoose.connection);
+  await server.stop();
+});
 
-describe('Tests de integración - Estudiante', () => {
-
-  it('La creación de niveles ha de estar prohibida para un alumno', async () => {
+describe("Tests de integración - Estudiante", () => {
+  it("La creación de niveles ha de estar prohibida para un alumno", async () => {
     const result = await server.executeOperation({
       query: `
       mutation {
@@ -71,12 +67,12 @@ describe('Tests de integración - Estudiante', () => {
             description
         }
       }
-             `
-    })
-    expect(result.errors[0].message).toBe('The user is not a teacher.')
-  })
+             `,
+    });
+    expect(result.errors[0].message).toBe("The user is not a teacher.");
+  });
 
-  it('La creación de lecciones ha de estar prohibida para un alumno', async () => {
+  it("La creación de lecciones ha de estar prohibida para un alumno", async () => {
     const result = await server.executeOperation({
       query: `
       mutation {
@@ -85,13 +81,12 @@ describe('Tests de integración - Estudiante', () => {
             description
         }
       }
-             `
-    })
-    expect(result.errors[0].message).toBe('The user is not a teacher.')
-  })
+             `,
+    });
+    expect(result.errors[0].message).toBe("The user is not a teacher.");
+  });
 
-  
-  it('La creación de contenido de texto ha de estar prohibida para un alumno', async () => {
+  it("La creación de contenido de texto ha de estar prohibida para un alumno", async () => {
     const result = await server.executeOperation({
       query: `
       mutation {
@@ -105,12 +100,12 @@ describe('Tests de integración - Estudiante', () => {
             content
         }
       }
-             `
-    })
-    expect(result.errors[0].message).toBe('The user is not a teacher.')
-  })
+             `,
+    });
+    expect(result.errors[0].message).toBe("The user is not a teacher.");
+  });
 
-  it('La creación de preguntas ha de estar prohibida para un alumno', async () => {
+  it("La creación de preguntas ha de estar prohibida para un alumno", async () => {
     const result = await server.executeOperation({
       query: `
       mutation {
@@ -124,9 +119,8 @@ describe('Tests de integración - Estudiante', () => {
             correctAnswer
         }
       }
-             `
-    })
-    expect(result.errors[0].message).toBe('The user is not a teacher.')
-  })
-
-})
+             `,
+    });
+    expect(result.errors[0].message).toBe("The user is not a teacher.");
+  });
+});

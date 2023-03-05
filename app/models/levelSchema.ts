@@ -1,9 +1,9 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model } from "mongoose";
 
 const levelSchema = new Schema({
   title: String,
   description: String,
-  lessons: [{ type: Schema.Types.ObjectId, ref: 'Lesson' }]
-})
+  lessons: [{ type: Schema.Types.ObjectId, ref: "Lesson" }],
+});
 
-export default model('Level', levelSchema)
+export default model("Level", levelSchema);

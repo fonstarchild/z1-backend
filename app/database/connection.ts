@@ -1,27 +1,28 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 export const connectToDb = async () => {
-  await mongoose.connect(
-    'mongodb://127.0.0.1:27017/z1backend'
-  )
-    .then(() => { console.log('Connected to database.') })
-    .catch((err) => {
-      console.error(err)
+  await mongoose
+    .connect("mongodb://127.0.0.1:27017/z1backend")
+    .then(() => {
+      console.log("Connected to database.");
     })
-}
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
-export const connectDBForTesting = async (mongodbURI: string, dbName: string) => {
+export const connectDBForTesting = async (
+  mongodbURI: string,
+  dbName: string
+) => {
   if (!mongodbURI || !dbName) {
-    return await Promise.reject('MongoDB URI or DB Name is not defined')
+    return await Promise.reject("MongoDB URI or DB Name is not defined");
   }
   try {
-    await mongoose.connect(
-      mongodbURI,
-      { autoIndex: false, dbName }
-    )
-    return mongoose.connection
+    await mongoose.connect(mongodbURI, { autoIndex: false, dbName });
+    return mongoose.connection;
   } catch (error) {
-    console.log(error)
-    return undefined
+    console.log(error);
+    return undefined;
   }
-}
+};
