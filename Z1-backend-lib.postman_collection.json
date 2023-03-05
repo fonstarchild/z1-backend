@@ -1,0 +1,748 @@
+{
+	"info": {
+		"_postman_id": "f8bb9693-1db9-4b60-add4-64ac969315d7",
+		"name": "Z1-backend-lib",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26148111"
+	},
+	"item": [
+		{
+			"name": "Updaters",
+			"item": [
+				{
+					"name": "[TEACHER] Update a level",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Update a Lesson",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Update a content",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Update a question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deleters",
+			"item": [
+				{
+					"name": "[TEACHER] Delete a level",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Delete a lesson",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Delete a text content",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Delete a Question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER] Delete an answer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    deleteAnswer(answer: \"64038b1f0b3ab945f0a337c9\" ){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Creators",
+			"item": [
+				{
+					"name": "[TEACHER]Add Lesson in a Level",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER]Add a Level",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER]Add Text Content in a Lesson",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addTextContentForALesson(\r\n        lesson: \"640204e00a7e1e477b57d6e7\", \r\n        title: \"Lección 2: Funciones\"\r\n        content: \"Hola qué tal\",\r\n        image: \"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png\"\r\n        ){\r\n        title\r\n        content\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER]Add Question in a Lesson",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[TEACHER]Add a test student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation{\r\n    addTestStudent(authtoken: \"student\", username: \"Juanito Mongolo\"){\r\n        username,\r\n        authtoken\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEST: Add the teacher",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "tokenauth",
+								"value": "teacher",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n    getAllLevels {\r\n        title\r\n        id\r\n        description\r\n        lessons {\r\n            title\r\n            description\r\n        }\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "[ALL[Get All Levels",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "teacher",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    getAllLevels {\r\n        title\r\n        id\r\n        description\r\n        lessons {\r\n            title\r\n            description\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[TEACHER]Get all students",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "teacher",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    getAllLevels {\r\n        title\r\n        description\r\n        lessons {\r\n            title\r\n            description\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[ALL]Get Lessons for a Level",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "teacher",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    getLessonsByLevel(level: \"640204b00a7e1e477b57d6e2\" ){\r\n        title\r\n        id\r\n        description\r\n        content {\r\n            title,\r\n            content,\r\n            hierarchy,\r\n        }\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[ALL]Text content for a Lesson",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "teacher",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    getContentByLesson(lesson: \"640204e00a7e1e477b57d6e7\"){\r\n        title,\r\n        content\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[ALL]Get a single content",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "teacher",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": " mutation{\r\n    addLessonForALevel(level: \"lol\", title: \"ASadas\", description: \"asdadwdwdwwd\"){\r\n        title\r\n        description\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[ALL]WhoAmI",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[STUDENT ONLY] Get the question for a level",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "student",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n    getQuestionForStudentInALesson(lesson: \"640204e00a7e1e477b57d6e7\"){\r\n        question\r\n        id\r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[STUDENT ONLY] Answer a quiz",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenauth",
+						"value": "student",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\r\n    giveAnswer(question: \"640398f21531788a740db049\", answer: [\"for\"] ){\r\n        correct,\r\n        \r\n    }\r\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

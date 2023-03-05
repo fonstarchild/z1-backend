@@ -214,6 +214,61 @@ const Resolvers = {
       }
       return null
     },
+    updateLevel: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      
+      const matchingFields = Object.keys(args).filter(value => Object.keys(Level.schema.paths).includes(value));
+      let update: any = new Object({});
+      for(let field of matchingFields){
+        update[field] = args[field]
+      }
+      const updatedObject = await Level.findByIdAndUpdate(args.level, update)
+      return updatedObject;
+    },
+
+    updateLesson: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      
+      const matchingFields = Object.keys(args).filter(value => Object.keys(Lesson.schema.paths).includes(value));
+      let update: any = new Object({});
+      for(let field of matchingFields){
+        update[field] = args[field]
+      }
+      const updatedObject = await Lesson.findByIdAndUpdate(args.lesson, update)
+      return updatedObject;
+    },
+
+    updateContent: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      
+      const matchingFields = Object.keys(args).filter(value => Object.keys(TextContent.schema.paths).includes(value));
+      let update: any = new Object({});
+      for(let field of matchingFields){
+        update[field] = args[field]
+      }
+      const updatedObject = await TextContent.findByIdAndUpdate(args.targetContent, update)
+      return updatedObject;
+    },
+
+    updateQuestion: async (_: any, args: any, context: any) => {
+      if (!isATeacher(context.user)) {
+        throw new AuthenticationError('The user is not a teacher.')
+      }
+      
+      const matchingFields = Object.keys(args).filter(value => Object.keys(Question.schema.paths).includes(value));
+      let update: any = new Object({});
+      for(let field of matchingFields){
+        update[field] = args[field]
+      }
+      const updatedObject = await Question.findByIdAndUpdate(args.targetQuestion, update)
+      return updatedObject;
+    },
 
     deleteLevel: async (_: any, args: any, context: any) => {
       if (!isATeacher(context.user)) {
