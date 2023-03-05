@@ -51,22 +51,16 @@ No he añadido autenticación porque realmente para un test de éstos no era nec
 2. 
     * npm
     ```sh
-    npm run lint 
-    ```
-    Ejecuta el linter
-3. 
-    * npm
-    ```sh
     npm run test 
     ```
     Ejecutan los tests. 
-4. 
+3. 
     * npm
     ```sh
     npm run build 
     ```
     Ejecuta la compilación typescript en una carpeta dist
-5. 
+4. 
     * npm
     ```sh
     npm run prettier 

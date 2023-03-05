@@ -7,9 +7,7 @@
     "build": "tsc",
     "test": "jest",
     "prettier": "npx prettier --check .",
-    "dev-server": "npx nodemon app/index.ts",
-    "lint": "eslint .  --ext .ts",
-    "lint-fix": "eslint --fix .  --ext .ts"
+    "dev-server": "npx nodemon app/index.ts"
   },
   "keywords": [],
   "author": "",
